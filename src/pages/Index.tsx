@@ -5,7 +5,7 @@ import CategoryFilter from '@/components/CategoryFilter';
 import ProductsGrid from '@/components/ProductsGrid';
 import { useInventory } from '@/hooks/useInventory';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { ExclamationTriangleIcon } from '@/components/icons';
 
 const Index: React.FC = () => {
   const { 
