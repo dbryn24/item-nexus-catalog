@@ -2,13 +2,28 @@
 import React from 'react';
 import { Product } from '@/types/inventory';
 import ProductCard from './ProductCard';
-import { getCategoryById, getSupplierById } from '@/utils/inventoryUtils';
 
 interface ProductsGridProps {
   products: Product[];
+  getCategoryName: (categoryId: string) => string;
+  getSupplierName: (supplierId: string) => string;
+  isLoading: boolean;
 }
 
-const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
+const ProductsGrid: React.FC<ProductsGridProps> = ({ 
+  products, 
+  getCategoryName, 
+  getSupplierName,
+  isLoading
+}) => {
+  if (isLoading) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-500">Loading products...</p>
+      </div>
+    );
+  }
+
   if (products.length === 0) {
     return (
       <div className="text-center py-8">
@@ -20,15 +35,15 @@ const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {products.map((product) => {
-        const category = getCategoryById(product.categoryId);
-        const supplier = getSupplierById(product.supplierId);
+        const categoryName = getCategoryName(product.categoryId);
+        const supplierName = getSupplierName(product.supplierId);
         
         return (
           <ProductCard
             key={product.id}
             product={product}
-            categoryName={category?.name || 'Unknown Category'}
-            supplierName={supplier?.name || 'Unknown Supplier'}
+            categoryName={categoryName}
+            supplierName={supplierName}
           />
         );
       })}
